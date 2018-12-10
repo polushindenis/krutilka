@@ -1,2 +1,0 @@
-# krutilka
-the krutilka
