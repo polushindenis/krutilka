@@ -1,4 +1,5 @@
 pragma solidity ^0.4.23;
+import "./IRandomPermutation.sol";
 
 contract Krutilka {
 
@@ -37,10 +38,13 @@ contract Krutilka {
 
   /////////////////////////////////////////////
   // Owner's public functions
-  constructor() public 
+  constructor(
+    address randomPermutationContractAddress
+    ) public 
   {
     owner = msg.sender;
     stage_ = Stage.Register;
+    randomPermutationContract_ = IRandomPermutation(randomPermutationContractAddress);
   }
 
   function StartRegisterStage() public restricted 
@@ -92,8 +96,13 @@ contract Krutilka {
     return participants.length;
   }
 
+  IRandomPermutation randomPermutationContract_;
+
   function RandomReorder() internal {
-    // i will create real random lately
-    orderedGifters_ = participants_;
+    uint[] memory randomArray = randomPermutationContract_.Go(participants_.length);
+    for(uint i = 0; i < participants_.length; i++ )
+    {
+      orderedGifters_.push( participants_[randomArray[i]] );
+    }
   }
 }
