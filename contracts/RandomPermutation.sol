@@ -10,6 +10,20 @@ contract RandomPermutation is IRandomPermutation
     {
       result[i]=i;
     }
+    
+    for(uint i=n-1; i>=0; i--)
+    {
+      uint j = random(n-1);
+      uint t = result[i];
+      result[i] = result[j];
+      result[j] = t;
+    }
+    
     return result;
+  }
+  
+  function random(uint maxValue) internal returns(uint)
+  {
+    return 0x123456789 % (maxValue+1);
   }
 }
