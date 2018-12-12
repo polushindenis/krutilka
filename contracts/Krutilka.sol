@@ -12,6 +12,12 @@ contract Krutilka {
         address_:msg.sender, 
         name_:yourName}));
   }
+  function GetMyName() public view returns(string)
+  {
+    uint myIndex = FindIn(participants_,msg.sender);
+    require(myIndex < participants_.length);
+    return participants_[myIndex].name_;
+  }
   function WhoToGift() public onlyStage(Stage.Gift) view returns(string) 
   {
     require (orderedGifters_.length == participants_.length);
